@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 
 function Link({ text, href, setPage, quote, comment }) {
   return (
-    <div className="relative p-2 rounded-l-md">
-      <div className="absolute -z-10 top-1/2 left-2 -translate-y-1/2 pi pi-chevron-right"></div>
+    <div className=" p-2 rounded-l-md">
+      <div className="-z-10 top-1/2 left-2 translate-y-[42px] pi pi-chevron-right"></div>
       <motion.button
         onClick={() => {
           setPage(href);
@@ -26,6 +26,19 @@ function Link({ text, href, setPage, quote, comment }) {
   );
 }
 
+function SimpleLink({ text, href, setPage }) {
+  return (
+    <div className="p-2">
+      <button
+        onClick={() => setPage(href)}
+        className="text-white cursor-pointer text-sm"
+      >
+        {text}
+      </button>
+    </div>
+  );
+}
+
 export default function HomePage({ page, setPage }) {
   const [text, setText] = useState("");
   const fullText = "The all-in-one Cybersecurity Tool to protect from Scam calls, e-mails and messages through advanced conversational analysis...";
@@ -40,66 +53,72 @@ export default function HomePage({ page, setPage }) {
   }, [text, fullText]);
 
   return (
-    <div className="text-white w-full h-[calc(100vh-8rem)] flex justify-center items-center">
-      <div className="flex w-full max-w-6xl">
-        <div className="w-1/2 flex flex-col justify-center">
-          <motion.h2
-            className="text-left mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            {text.split(' ').map(word => 
-              word === 'Cybersecurity' || word === 'Tool' ? (
-                <span key={word} style={{ color: cyberColor }}>{word} </span>
-              ) : (
-                <span key={word}>{word} </span>
-              )
-            )}
-          </motion.h2>
-          <div className="flex flex-col gap-4 text-left">
-            <Link
-              setPage={setPage}
-              href={"text"}
-              text={
-                <div className="flex items-center justify-center">
-                  <img src="/text.png" alt="icon" style={{ width: "40px", height: "40px" }} />
-                </div>
-              }
-              quote={"E-mail & Text Message Scam Detection"}
-              comment={
-                "Employs AI to analyze voice patterns, identifying fraud in real-time to protect users from malicious phone scams."
-              }
-            />
-            <Link
-              setPage={setPage}
-              href={"chat"}
-              text={
-                <div className="flex items-center justify-center">
-                  <img src="/call.png" alt="icon" style={{ width: "40px", height: "40px" }} />
-                </div>
-              }
-              quote={"Call Scam Detection"}
-              comment={
-                "Uses Machine Learning to detect and block phishing and spam attempts, ensuring secure communication."
-              }
-            />
+    <div className="text-white w-full h-[calc(100vh-8rem)] flex flex-col md:flex-row justify-center items-center">
+      <div className="flex flex-col w-full md:max-w-6xl">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 flex flex-col justify-center mt-8 md:mt-0">
+            <motion.h2
+              className="text-left mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              {text.split(' ').map(word => 
+                word === 'Cybersecurity' || word === 'Tool' ? (
+                  <span key={word} style={{ color: cyberColor }}>{word} </span>
+                ) : (
+                  <span key={word}>{word} </span>
+                )
+              )}
+            </motion.h2>
+            <div className="flex flex-col gap-4 text-left">
+              <Link
+                setPage={setPage}
+                href={"chat"}
+                text={
+                  <div className="flex items-center justify-center">
+                    <img src="/call.png" alt="icon" style={{ width: "40px", height: "40px" }} />
+                  </div>
+                }
+                quote={"Call Scam Detection"}
+                comment={
+                  "Uses Machine Learning to detect and block phishing and spam attempts, ensuring secure communication."
+                }
+              />
+              <Link
+                setPage={setPage}
+                href={"text"}
+                text={
+                  <div className="flex items-center justify-center">
+                    <img src="/text.png" alt="icon" style={{ width: "40px", height: "40px" }} />
+                  </div>
+                }
+                quote={"E-mail & Text Message Scam Detection"}
+                comment={
+                  "Employs AI to analyze voice patterns, identifying fraud in real-time to protect users from malicious phone scams."
+                }
+              />
+            </div>
+          </div>
+          <div className="w-full md:w-1/2 flex justify-center items-center ">
+            <motion.div
+              whileHover={{
+                scale: 1.1,
+                rotate: 5,
+                transition: { type: "spring", stiffness: 300 },
+              }}
+            >
+              <img
+                src="/WatchDog-Landing.png"
+                alt="Logo"
+                className=" w-80 h-80"
+              />
+            </motion.div>
           </div>
         </div>
-        <div className="w-1/2 flex justify-center items-center">
-          <motion.div
-            whileHover={{
-              scale: 1.1,
-              rotate: 5,
-              transition: { type: "spring", stiffness: 300 },
-            }}
-          >
-            <img
-              src="/WatchDog-Landing.png"
-              alt="Logo"
-              className="max-w-full w-80 h-80"
-            />
-          </motion.div>
+        <div className="flex flex-row justify-center gap-4 mt-4">
+          <SimpleLink setPage={setPage} href={"about"} text={"About Us"} />
+          <SimpleLink setPage={setPage} href={"privacy"} text={"Privacy Policy"} />
         </div>
       </div>
     </div>
